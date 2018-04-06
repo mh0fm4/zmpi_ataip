@@ -1,0 +1,29 @@
+2018-04-06
+
+  * New release version 1.0.4 (first release on github.com/mh0fm4/zmpi_ataip)
+  * Fix wrong name in license headers
+  * Add ZMPI_Alltoall_inplace_symmetric and ZMPI_Neighbor_alltoall_inplace_symmetric, i.e, in-place versions of regular all-to-all based on the symmetric algorithms (linear and hierarchic plus randomized versions, algorithm selection is controled by global variable ZMPI_Alltoall_inplace_symmetric_sym_type)
+  * Clean up global variables and constants
+  * Fix ZMPI_Neighbor_alltoallv_inplace_symmetric
+  * Minor fixes
+
+
+2013-06-01
+
+  * New release version 1.0.3
+  * Add ZMPI_Neighbor_alltoallv_inplace and ZMPI_Neighbor_alltoallv_inplace_symmetric conforming to the neighborhood collectives of MPI version 3.0 (all neighborhood versions are controled by the same global variables as the original (dense) versions)
+  * Rework symmetric algorithms and add randomized versions (algorithm selection is controled by global variables ZMPI_Alltoallv_inplace_sym_type and ZMPI_Alltoallv_inplace_symmetric_type)
+  * Support usage of auxiliary memory for ZMPI_Alltoallv_inplace_symmetric (and ZMPI_Neighbor_alltoallv_inplace_symmetric)
+  * Use radix sort (1-bit msdf) instead of qsort
+  * Misc. cleanup
+
+
+2013-04-12
+
+  * New release version 1.0.2
+  * Add ZMPI_Alltoallv_inplace_symmetric that supports the standardized symmetric in-place exchange of MPI_Alltoallv only
+  * Add new symmetric algorithms (linear and hierarchic)
+  * Fix memory leaks in the auxiliary heap version and the local generic heap
+
+
+Initial release version 1.0.1

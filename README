@@ -1,0 +1,42 @@
+ZMPI-ATAIP -- ZMPI All-to-all In-place Library
+
+
+Overview
+--------
+The ZMPI-ATAIP library provides an in-place version of the collective communication operation MPI_Alltoallv.
+According to MPI Standard v2.2 (September 4, 2009), the "in place" option for MPI_Alltoallv supports only a "symmetric" message exchange between each pair of processes.
+Given values of send counts and displacements are ignored and implicitly the same values as given for the receive counts and displacements are used.
+The in-place version of the ZMPI-ATAIP library overcomes this limitation and allows to perform data redistributions as flexible as with the regular (not in-place) MPI_Alltoallv operation.
+Send counts and displacements can be specified independently from the receive counts and displacements.
+Additionally available free memory can be supplied to the library for improving the performance of the data redistribution operation.
+A description of an early version of the algorithm can be found in:
+
+  M. Hofmann and G. Rünger: An In-place Algorithm for Irregular All-to-All Communication with Limited Memory.
+  In: Recent Advances in the Message Passing Interface: 17th European MPI User's Group Meeting, pg. 113-121. Springer, 2010.
+
+
+Usage
+-----
+1. Use 'make' to create the library archive 'libzmpi_ataip.a' containing the ZMPI-ATAIP library.
+   Edit file 'Makefile' to modify compiler and options.
+
+2. File 'zmpi_ataip.h' provides interface definitions to the library functions.
+
+3. Set pointer 'ZMPI_Alltoallv_inplace_aux' and integer value 'ZMPI_Alltoallv_inplace_aux_size' to the address and size (in bytes) of the additionally available free memory.
+   Call function 'ZMPI_Alltoallv_inplace' using value MPI_IN_PLACE either as address of the send or receive buffer.
+
+4. Use 'make demo' to create a short demo program 'inplace_demo'.
+   The source code of the demo is located in directory 'demo' and demonstrates the usage of the new in-place data redistribution operation 'ZMPI_Alltoallv_inplace'.
+
+
+Namespace
+---------
+Since the definitions of this library are not part of the MPI standard, the prefix 'ZMPI_' is used for all non-standard extensions.
+
+
+Datatype limitations
+--------------------
+The current implementation uses the lower bounds and extents of the specified MPI datatypes to copy/move messages in memory (using memcpy/memmove operations).
+Thus, sparse datatypes with holes are not supported and can lead to undefined behavior.
+Furthermore, the size of a message given by the send count on the source process has to be equal to the message size given by the receive count on the destination process (otherwise the implementation can lead to a deadlock or other undefined behavior).
+Thus, using non-basic MPI datatypes is only supported as far as the messages sizes on source and destination processes remain equal.
